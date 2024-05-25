@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn">Click</button>
+    <script>
+      const API_URI = "https://meowfacts.herokuapp.com/";
+      const btn = document.getElementById("btn");
+      const fetchData = async () => {
+        try {
+          const response = await fetch(API_URI);
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      const handleClick = async () => {
+        const data = await fetchData();
+        const fact = data.data[0];
+        const box = document.getElementById("box");
+        if (box) {
+          box.innerHTML = fact;
+        } else {
+          const box = document.createElement("div");
+          box.setAttribute("id", "box");
+          box.innerHTML = fact;
+          document.body.appendChild(box);
+        }
+      };
+      btn.addEventListener("click", () => {
+        handleClick();
+      });
+    </script>
+  </body>
+</html>
